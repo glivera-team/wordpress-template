@@ -1,5 +1,5 @@
 {
-  "name": "glivera-team-template",
+  "name": "glivera-team-wordpress-template",
   "version": "1.0.0",
   "description": "1. If you don't have installed [node.js](https://nodejs.org/) - install it(latest version).Also you should install [python(2 version)](https://www.python.org/downloads/release/python-2710/) and gulp globally",
   "main": "gulpfile.js",
