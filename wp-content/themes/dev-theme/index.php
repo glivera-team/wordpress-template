@@ -1,1 +1,2 @@
 <?php
+get_header();
