@@ -34,8 +34,8 @@ $allowed_html = array(
 
 // add styles
 function register_styles() {
-	wp_register_style( 'theme_styles', get_template_directory_uri() . '/styles/main_global.css', false, '1.0.0' );
-	wp_register_style( 'custom_styles', get_template_directory_uri() . '/style.css', false, '1.0.0' );
+	wp_register_style( 'theme_styles', get_template_directory_uri() . '/styles/main_global.css', false, time() );
+	wp_register_style( 'custom_styles', get_template_directory_uri() . '/style.css', false, time() );
 
 	wp_enqueue_style( 'theme_styles' );
 	wp_enqueue_style( 'custom_styles' );
@@ -46,9 +46,9 @@ function register_styles() {
 function register_scripts() {
 	wp_deregister_script( 'jquery' );
 
-	wp_register_script( 'jquery', get_template_directory_uri() . '//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', false, '1.0.0', true );
-	wp_register_script( 'all', get_template_directory_uri() . '/js/all.js', array('jquery'), '1.0.0', true );
-	wp_register_script( 'main', get_template_directory_uri() . '/js/main.js', array('jquery'), '1.0.0', true );
+	wp_register_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', false, '1.0.0', true );
+	wp_register_script( 'all', get_template_directory_uri() . '/js/all.js', array('jquery'), time(), true );
+	wp_register_script( 'main', get_template_directory_uri() . '/js/main.js', array('jquery'), time(), true );
 
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'all' );
