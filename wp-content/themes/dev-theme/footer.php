@@ -1,5 +1,8 @@
-<?php wp_footer(); ?>
-
-<footer class="footer">
-	this is foooter!!!
-</footer>
+		</div>
+		<footer class="footer">
+			this is foooter!!!
+		</footer>
+		<?php wp_footer(); ?>
+	</div>
+</body>
+</html>
