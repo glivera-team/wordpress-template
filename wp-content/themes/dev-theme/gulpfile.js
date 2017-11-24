@@ -1,29 +1,34 @@
 // Variables //
 // First of all change theme name
-var themeName = 'theme';
-var buildDir  = '../' + themeName + '/';
+var themeName = 'theme',
+		assetsDir = 'assets/',
+		buildDir  = '../' + themeName + '/';
 
 // plugins for development
-var gulp = require('gulp'),
-	rimraf = require('rimraf'),
-	sass = require('gulp-sass'),
+var gulp      = require('gulp'),
+	rimraf      = require('rimraf'),
+	sass        = require('gulp-sass'),
 	inlineimage = require('gulp-inline-image'),
-	prefix = require('gulp-autoprefixer'),
-	plumber = require('gulp-plumber'),
-	dirSync = require('gulp-directory-sync'),
+	prefix      = require('gulp-autoprefixer'),
+	plumber     = require('gulp-plumber'),
+	dirSync     = require('gulp-directory-sync'),
 	browserSync = require('browser-sync').create(),
-	concat = require('gulp-concat'),
-	cssfont64 = require('gulp-cssfont64'),
-	sourcemaps = require('gulp-sourcemaps'),
-	postcss = require('gulp-postcss'),
-	assets  = require('postcss-assets');
+	concat      = require('gulp-concat'),
+	cssfont64   = require('gulp-cssfont64'),
+	sourcemaps  = require('gulp-sourcemaps'),
+	postcss     = require('gulp-postcss'),
+	assets      = require('postcss-assets'),
+	svgsprite   = require('gulp-svg-sprite'),
+	svgmin      = require('gulp-svgmin'),
+	cheerio     = require('gulp-cheerio'),
+	replace     = require('gulp-replace');
 
 // plugins for build
-var purify = require('gulp-purifycss'),
-	uglify = require('gulp-uglify'),
-	imagemin = require('gulp-imagemin'),
-	pngquant = require('imagemin-pngquant'),
-	csso = require('gulp-csso');
+var purify    = require('gulp-purifycss'),
+	uglify      = require('gulp-uglify'),
+	imagemin    = require('gulp-imagemin'),
+	pngquant    = require('imagemin-pngquant'),
+	csso        = require('gulp-csso');
 
 //----------------------------------------------------Compiling
 gulp.task('sass', function () {
@@ -56,6 +61,46 @@ gulp.task('js', function() {
 });
 //----------------------------------------------------Compiling###
 
+//--------------------------------------------SVG sprite
+gulp.task('svgSpriteBuild', function () {
+	return gulp.src(assetsDir + 'i/icons/*.svg')
+	// minify svg
+			.pipe(svgmin({
+				js2svg: {
+					pretty: true
+				}
+			}))
+			// remove all fill and style declarations in out shapes
+			.pipe(cheerio({
+				run: function ($) {
+					$('[fill]').removeAttr('fill');
+					$('[stroke]').removeAttr('stroke');
+					$('[style]').removeAttr('style');
+				},
+				parserOptions: {xmlMode: true}
+			}))
+			// cheerio plugin create unnecessary string '&gt;', so replace it.
+			.pipe(replace('&gt;', '>'))
+			// build svg sprite
+			.pipe(svgsprite({
+				mode: {
+					symbol: {
+						sprite: '../sprite.svg',
+						render: {
+							scss: {
+								dest: '../../../'+ assetsDir +'/sass/_sprite.scss',
+								template: assetsDir + 'sass/templates/_sprite_template.scss'
+							}
+						},
+						example: true
+					}
+				}
+			}))
+			.pipe(gulp.dest('i/sprite/'));
+});
+//---------------------------------------------SVG sprite###
+
+
 //watching files and run tasks
 gulp.task('watch', function () {
 	gulp.watch('sass/**/*.scss', ['sass']);
@@ -67,6 +112,7 @@ gulp.task('watch', function () {
 gulp.task('browser-sync', function () {
 	var files = [
 		'style.css',
+		'styles/main_global.css',
 		'js/**/*.js',
 		'**/*.php'
 	];
@@ -97,7 +143,7 @@ gulp.task('cleanBuildDir', function (cb) {
 
 //minify images
 gulp.task('imgBuild', function () {
-	return gulp.src('i/**/*')
+	return gulp.src(assetsDir + 'i/**/*')
 		.pipe(imagemin({
 			progressive: true,
 			svgoPlugins: [{removeViewBox: false}],
@@ -128,14 +174,24 @@ gulp.task('cssBuild', function () {
 });
 
 //copy theme files
-gulp.task('copyFiles', function () {
-	return gulp.src(['**/*.php', 'acf-json/**'])
+gulp.task('copyPHPFiles', function () {
+	return gulp.src('**/*.php')
 		.pipe(gulp.dest(buildDir))
+});
+
+gulp.task('copyACFJson', function () {
+	return gulp.src('acf-json/**')
+			.pipe(gulp.dest(buildDir + 'acf-json/'))
+});
+
+gulp.task('copySVGFiles', function () {
+	return gulp.src(['i/icons/**/*.svg', 'i/sprite/**'])
+			.pipe(gulp.dest(buildDir + 'i/'))
 });
 //---------------------------------------------
 
 gulp.task('default', ['php', 'sass', 'js', 'watch', 'browser-sync']);
 
 gulp.task('build', ['cleanBuildDir'], function () {
-	gulp.start('imgBuild', 'fontsBuild', 'jsBuild', 'cssBuild', 'copyFiles');
+	gulp.start('imgBuild', 'fontsBuild', 'jsBuild', 'cssBuild', 'copyPHPFiles' ,'copyACFJson', 'copySVGFiles');
 });
