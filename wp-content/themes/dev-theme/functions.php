@@ -89,6 +89,10 @@ function theme_setup() {
 
 add_action( 'after_setup_theme', 'theme_setup' );
 
+
+/*
+ * Add Theme setup page with ACF plugin
+ */
 if( function_exists('acf_add_options_page') ) {
 
 	acf_add_options_page(array(
@@ -121,13 +125,6 @@ function custom_mtypes( $m ){
 
 add_filter( 'upload_mimes', 'custom_mtypes' );
 
-/*
- * Custom functions
- */
-function post_slug() {
-	global $post;
-	return $post->post_name;
-}
 
 class new_walker extends Walker_Nav_Menu {
 
