@@ -34,16 +34,14 @@ $allowed_html = array(
 
 // add styles
 function register_styles() {
-	// uncomment when the file exists
-	//$global_styles = get_template_directory_uri() . '/styles/main_global.css';
+	$global_styles = get_template_directory_uri() . '/styles/main_global.css';
 	$styles        = get_template_directory_uri() . '/style.css';
 
-	// uncomment when the file exists
-	//wp_register_style( 'theme_styles', $global_styles, false, hash_file( 'crc32', $global_styles ) );
+	wp_register_style( 'theme_styles', $global_styles, false, hash_file( 'crc32', $global_styles ) );
 	wp_register_style( 'custom_styles', $styles, false, hash_file( 'crc32', $styles ) );
 
-	// uncomment when the file exists
-	//wp_enqueue_style( 'theme_styles' );
+
+	wp_enqueue_style( 'theme_styles' );
 	wp_enqueue_style( 'custom_styles' );
 }
 
@@ -51,20 +49,16 @@ function register_styles() {
 // add scripts
 function register_scripts() {
 	$main_js = get_template_directory_uri() . '/js/main.js';
-	// uncomment when the file exists
-	//$all_js  = get_template_directory_uri() . '/js/all.js';
+	$all_js  = get_template_directory_uri() . '/js/all.js';
 
 	wp_deregister_script( 'jquery' );
 
-	wp_register_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', false, '1.0.0', true );
-
-	// uncomment when the file exists
-	//wp_register_script( 'all', $all_js, array('jquery'), hash_file( 'crc32', $all_js ), true );
+	wp_register_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js', false, '1.0.0', true );
+	wp_register_script( 'all', $all_js, array('jquery'), hash_file( 'crc32', $all_js ), true );
 	wp_register_script( 'main', $main_js, array('jquery'), hash_file('crc32', $main_js ), true );
 
 	wp_enqueue_script( 'jquery' );
-	// uncomment when the file exists
-	//wp_enqueue_script( 'all' );
+	wp_enqueue_script( 'all' );
 	wp_enqueue_script( 'main' );
 }
 

@@ -32,7 +32,7 @@ var purify    = require('gulp-purifycss'),
 
 //----------------------------------------------------Compiling
 gulp.task('sass', function () {
-	gulp.src(['sass/**/*.scss', '!' + 'sass/**/_*.scss'])
+	gulp.src([assetsDir + 'sass/**/*.scss', '!' + assetsDir + 'sass/**/_*.scss'])
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
 		.pipe(sass())
@@ -53,6 +53,13 @@ gulp.task('fontsConvert', function () {
 gulp.task('php', function() {
 	return gulp.src(['**/*.php', '!' + buildDir + '**/*.php'])
 		.pipe(browserSync.stream());
+});
+
+gulp.task('jsConcat', function () {
+	return gulp.src(assetsDir + 'js/all/**/*.js')
+			.pipe(concat('all.js', {newLine: ';'}))
+			.pipe(gulp.dest('js/'))
+			.pipe(browserSync.stream());
 });
 
 gulp.task('js', function() {
@@ -103,8 +110,8 @@ gulp.task('svgSpriteBuild', function () {
 
 //watching files and run tasks
 gulp.task('watch', function () {
-	gulp.watch('sass/**/*.scss', ['sass']);
-	gulp.watch('js/**/*.js', ['js']);
+	gulp.watch(assetsDir + 'sass/**/*.scss', ['sass']);
+	gulp.watch(assetsDir + 'js/**/*.js', ['js']);
 	gulp.watch('**/*.php', ['php']);
 });
 
@@ -123,7 +130,7 @@ gulp.task('browser-sync', function () {
 });
 
 gulp.task('cssLint', function () {
-	return gulp.src(['sass/**/*.scss', '!' + 'sass/templates/*.scss'])
+	return gulp.src([assetsDir + 'sass/**/*.scss', '!' + assetsDir + 'sass/templates/*.scss'])
 		.pipe(postcss(
 			[
 				stylelint(),
@@ -190,7 +197,7 @@ gulp.task('copySVGFiles', function () {
 });
 //---------------------------------------------
 
-gulp.task('default', ['php', 'sass', 'js', 'watch', 'browser-sync']);
+gulp.task('default', ['php', 'sass', 'jsConcat', 'js', 'watch', 'browser-sync']);
 
 gulp.task('build', ['cleanBuildDir'], function () {
 	gulp.start('imgBuild', 'fontsBuild', 'jsBuild', 'cssBuild', 'copyPHPFiles' ,'copyACFJson', 'copySVGFiles');
