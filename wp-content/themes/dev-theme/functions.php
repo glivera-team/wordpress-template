@@ -119,6 +119,16 @@ function custom_mtypes( $m ){
 
 add_filter( 'upload_mimes', 'custom_mtypes' );
 
+/*
+ * Get svg icon from sprite
+ *
+ * usage: icon( 'check' ); or icon( 'check', 'test_mod' );
+ */
+function icon( $icon_name, $icon_mod = null ) {
+	$classes = ( !$icon_mod ) ? 'icon icon-'. $icon_name : 'icon icon-'. $icon_name . ' ' . $icon_mod;
+	return print('<svg class="' . $classes . '"><use xlink:href="'. get_template_directory_uri() .'/i/sprite/sprite.svg#' . $icon_name . '"></use></svg>');
+}
+
 
 class new_walker extends Walker_Nav_Menu {
 
