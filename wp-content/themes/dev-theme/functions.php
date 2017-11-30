@@ -32,7 +32,9 @@ $allowed_html = array(
 	'blockquote' => array(),
 );
 
-// add styles
+/**
+ * Add styles
+ */
 function register_styles() {
 	$global_styles = get_template_directory_uri() . '/styles/main_global.css';
 	$styles        = get_template_directory_uri() . '/style.css';
@@ -46,7 +48,9 @@ function register_styles() {
 }
 
 
-// add scripts
+/**
+ * Add scripts
+ */
 function register_scripts() {
 	$main_js = get_template_directory_uri() . '/js/main.js';
 	$all_js  = get_template_directory_uri() . '/js/all.js';
@@ -63,7 +67,9 @@ function register_scripts() {
 }
 
 
-// theme setup
+/**
+ * Theme setup
+ */
 function theme_setup() {
 	add_theme_support( 'menus' );
 	add_theme_support( 'title-tag' );
@@ -84,7 +90,7 @@ function theme_setup() {
 add_action( 'after_setup_theme', 'theme_setup' );
 
 
-/*
+/**
  * Add Theme setup page with ACF plugin
  */
 if( function_exists('acf_add_options_page') ) {
@@ -109,7 +115,7 @@ if( function_exists('acf_add_options_page') ) {
 	));
 }
 
-/*
+/**
  * Add *.svg files support
  */
 function custom_mtypes( $m ){
@@ -119,7 +125,7 @@ function custom_mtypes( $m ){
 
 add_filter( 'upload_mimes', 'custom_mtypes' );
 
-/*
+/**
  * Get svg icon from sprite
  *
  * usage: icon( 'check' ); or icon( 'check', 'test_mod' );
@@ -128,6 +134,44 @@ function icon( $icon_name, $icon_mod = null ) {
 	$classes = ( !$icon_mod ) ? 'icon icon-'. $icon_name : 'icon icon-'. $icon_name . ' ' . $icon_mod;
 	return print('<svg class="' . $classes . '"><use xlink:href="'. get_template_directory_uri() .'/i/sprite/sprite.svg#' . $icon_name . '"></use></svg>');
 }
+
+/**
+ * Add favicon
+ */
+function add_favicon() {
+	?>
+	<link rel="shortcut icon" type="image/x-icon" href="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/favicon.ico">
+	<link rel="apple-touch-icon" sizes="57x57" href="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/favicon-16x16.png">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+	<?php
+}
+
+/**
+ * Add viewport metateg
+ */
+
+function set_viewport()
+{
+	?>
+	<meta name="viewport" content="width=device-width" />
+	<?php
+}
+
+add_action( 'wp_head', 'set_viewport' );
 
 
 class new_walker extends Walker_Nav_Menu {
