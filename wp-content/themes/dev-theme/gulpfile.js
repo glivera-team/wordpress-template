@@ -1,8 +1,9 @@
 // Variables //
-// First of all change theme name
+// First of all change theme name and proxy
 var themeName = 'theme',
 		assetsDir = 'assets/',
-		buildDir  = '../' + themeName + '/';
+		buildDir  = '../' + themeName + '/',
+		proxy     = 'localhost:8888/wp.dev/';
 
 // plugins for development
 var gulp      = require('gulp'),
@@ -117,7 +118,7 @@ gulp.task('browser-sync', function () {
 		'js/**/*.js'
 	];
 	browserSync.init({
-		proxy: "localhost:8888/wp.dev/"
+		proxy: proxy
 		//notify: false
 	});
 });
