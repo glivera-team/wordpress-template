@@ -50,11 +50,6 @@ gulp.task('fontsConvert', function () {
 		.pipe(browserSync.stream());
 });
 
-gulp.task('php', function() {
-	return gulp.src(['**/*.php', '!' + buildDir + '**/*.php'])
-		.pipe(browserSync.stream());
-});
-
 gulp.task('jsConcat', function () {
 	return gulp.src(assetsDir + 'js/all/**/*.js')
 			.pipe(concat('all.js', {newLine: ';'}))
@@ -112,7 +107,6 @@ gulp.task('svgSpriteBuild', function () {
 gulp.task('watch', function () {
 	gulp.watch(assetsDir + 'sass/**/*.scss', ['sass']);
 	gulp.watch(assetsDir + 'js/**/*.js', ['js']);
-	gulp.watch('**/*.php', ['php']);
 });
 
 //livereload and open project in browser
@@ -120,8 +114,7 @@ gulp.task('browser-sync', function () {
 	var files = [
 		'style.css',
 		'styles/main_global.css',
-		'js/**/*.js',
-		'**/*.php'
+		'js/**/*.js'
 	];
 	browserSync.init({
 		proxy: "localhost:8888/wp.dev/"
@@ -197,7 +190,7 @@ gulp.task('copySVGFiles', function () {
 });
 //---------------------------------------------
 
-gulp.task('default', ['php', 'sass', 'jsConcat', 'js', 'watch', 'browser-sync']);
+gulp.task('default', ['sass', 'jsConcat', 'js', 'watch', 'browser-sync']);
 
 gulp.task('build', ['cleanBuildDir'], function () {
 	gulp.start('imgBuild', 'fontsBuild', 'jsBuild', 'cssBuild', 'copyPHPFiles' ,'copyACFJson', 'copySVGFiles');
