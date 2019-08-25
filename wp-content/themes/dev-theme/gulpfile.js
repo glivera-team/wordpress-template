@@ -185,7 +185,7 @@ gulp.task('cssBuild', function () {
 
 //copy theme files
 gulp.task('copyPHPFiles', function () {
-	return gulp.src('**/*.php')
+	return gulp.src(['**/*.php', 'screenshot.png', 'style.css'])
 		.pipe(gulp.dest(buildDir))
 });
 
