@@ -1,4 +1,7 @@
-!function(a,b){"function"==typeof define&&define.amd?
+( function( $ ) {
+
+} )( jQuery )
+;!function(a,b){"function"==typeof define&&define.amd?
 // AMD. Register as an anonymous module unless amdModuleId is set
 define([],function(){return a.svg4everybody=b()}):"object"==typeof exports?module.exports=b():a.svg4everybody=b()}(this,function(){/*! svg4everybody v2.0.3 | github.com/jonathantneal/svg4everybody */
 function a(a,b){
