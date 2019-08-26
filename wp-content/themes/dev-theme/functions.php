@@ -2,6 +2,7 @@
 
 require_once ( TEMPLATEPATH . '/inc/wp_customizer.php' );
 require_once ( TEMPLATEPATH . '/inc/wp_custom_menu_walker.php' );
+require_once ( TEMPLATEPATH . '/inc/functions/disable_emoji.php' );
 
 $allowed_html = array(
 	'a' => array(
