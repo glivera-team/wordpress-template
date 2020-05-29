@@ -1,5 +1,6 @@
 <?php
 
+require_once ( TEMPLATEPATH . '/inc/functions/site_settings.php' );
 require_once ( TEMPLATEPATH . '/inc/wp_customizer.php' );
 require_once ( TEMPLATEPATH . '/inc/wp_custom_menu_walker.php' );
 require_once ( TEMPLATEPATH . '/inc/functions/disable_emoji.php' );
@@ -162,8 +163,39 @@ function add_favicon() {
 function set_viewport()
 {
 	?>
-	<meta name="viewport" content="width=device-width" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<?php
 }
 
 add_action( 'wp_head', 'set_viewport' );
+
+/**
+ * Add Shortcode
+ */
+function generate_iframe( $atts ) {
+	// Attributes
+	$atts = shortcode_atts(
+		array(
+			'src' => null,
+			'width' => '640',
+			'height' => '320',
+		),
+		$atts,
+		'iframe'
+	);
+	$id = uniqid();
+	$iframe_obj = 'iframe_obj_' . $id;
+
+	wp_localize_script( 'main', $iframe_obj, array(
+			'iframe_width'  => $atts['width'],
+			'iframe_height' => $atts['height']
+	) );
+
+	if ( $atts['src'] ) :
+		return '<iframe id="iframe-'. $id .'" src="'. $atts['src'] .'"width="'. $atts['width'] .'" height="'. $atts['height'] .'"></iframe>';
+	else :
+		__return_false();
+	endif;
+
+}
+add_shortcode( 'iframe', 'generate_iframe' );
