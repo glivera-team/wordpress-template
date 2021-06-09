@@ -24,7 +24,7 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-svg-sprite": "^1.5.0",
     "gulp-svgmin": "^2.2.0",
-    "gulp-uglify": "^3.0.2",
+    "gulp-terser": "^3.0.2",
     "imagemin-pngquant": "^8.0.0",
     "postcss-assets": "^5.0.0",
     "postcss-reporter": "^6.0.1",

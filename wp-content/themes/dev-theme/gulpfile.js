@@ -26,7 +26,7 @@ let gulp      = require('gulp'),
 
 // plugins for build
 let purify    = require('gulp-purifycss'),
-		uglify    = require('gulp-uglify'),
+		terser    = require('gulp-terser'),
 		imagemin  = require('gulp-imagemin'),
 		pngquant  = require('imagemin-pngquant'),
 		csso      = require('gulp-csso');
@@ -165,7 +165,7 @@ gulp.task('fontsBuild', function () {
 //copy and minify js
 gulp.task('jsBuild', function () {
 	return gulp.src([assetsDir + 'js/**/*', '!' + assetsDir + 'js/all/**/*.js'])
-	.pipe(uglify())
+	.pipe(terser())
 	.pipe(gulp.dest(buildDir + 'js/'))
 });
 
