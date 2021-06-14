@@ -164,7 +164,8 @@ gulp.task('fontsBuild', function () {
 
 //copy and minify js
 gulp.task('jsBuild', function () {
-	return gulp.src([assetsDir + 'js/**/*', '!' + assetsDir + 'js/all/**/*.js'])
+	//return gulp.src([assetsDir + 'js/**/*', '!' + assetsDir + 'js/all/**/*.js'])
+	return gulp.src(buildDir + 'js/**/*')
 	.pipe(terser())
 	.pipe(gulp.dest(buildDir + 'js/'))
 });
