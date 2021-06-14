@@ -58,6 +58,13 @@ gulp.task('jsConcatLibs', function () {
 		.pipe(browserSync.stream());
 });
 
+gulp.task('jsConcatComponents', function () {
+	return gulp.src(assetsDir + 'js/components/**/*.js')
+		.pipe(concat('components.js', {newLine: ';'}))
+		.pipe(gulp.dest('js/'))
+		.pipe(browserSync.stream());
+});
+
 gulp.task('jsCopy', function() {
 	return gulp.src(assetsDir + 'js/*.js')
 		.pipe(gulp.dest('js/'))
@@ -109,6 +116,7 @@ gulp.task('svgSpriteBuild', function () {
 gulp.task('watch', function () {
 	gulp.watch(assetsDir + 'sass/**/*.scss', gulp.series('sass'));
 	gulp.watch(assetsDir + 'js/libs/**/*.js', gulp.series('jsConcatLibs'));
+	gulp.watch(assetsDir + 'js/components/**/*.js', gulp.series('jsConcatComponents'));
 	gulp.watch(assetsDir + 'js/**/*.js', gulp.series('jsCopy'));
 	gulp.watch(assetsDir + 'fonts/**/*', gulp.series('fontsConvert'));
 });
@@ -142,7 +150,7 @@ gulp.task('cssLint', function () {
 //---------------------------------building final project folder
 //clean build folder
 gulp.task('cleanBuildDir', function (cb) {
-	rimraf(buildDir, cb);
+  return rimraf(buildDir, cb);
 });
 
 //minify images
@@ -171,10 +179,12 @@ gulp.task('jsBuild', function () {
 });
 
 gulp.task('jsConcat', function () {
-	return gulp.src(assetsDir + 'js/libs/**/*.js')
-	.pipe(concat('libs.js', {newLine: ';'}))
-	.pipe(gulp.dest(buildDir + 'js/'))
+	// return gulp.src([assetsDir + 'js/libs/**/*.js', '!' + assetsDir + 'js/components/**/*.js'])
+	return gulp.src(assetsDir + 'js/**/*')
+		.pipe(concat('main.js', {newLine: ';'}))
+		.pipe(gulp.dest(buildDir + 'js/'))
 });
+
 
 //copy, minify css
 gulp.task('cssBuild', function () {
@@ -202,10 +212,11 @@ gulp.task('copySVGFiles', function () {
 //---------------------------------------------
 
 gulp.task('default', gulp.series(
-	gulp.parallel('sass', 'fontsConvert', 'jsConcatLibs', 'jsCopy', 'watch', 'browser-sync')
+	gulp.parallel('sass', 'fontsConvert', 'jsConcatLibs', 'jsConcatComponents', 'jsCopy', 'watch', 'browser-sync')
 ) );
 
 gulp.task('build', gulp.series(
 	'cleanBuildDir',
-	gulp.parallel('imgBuild', 'jsConcat', 'jsBuild', 'cssBuild', 'copyPHPFiles' ,'copyACFJson', 'copySVGFiles')
+	gulp.parallel('jsConcat'),
+	gulp.parallel('imgBuild', 'jsBuild', 'cssBuild', 'copyPHPFiles' ,'copyACFJson', 'copySVGFiles')
 ) );
