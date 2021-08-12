@@ -25,7 +25,7 @@
 				'menu'            => 'Main menu',
 				'container'       => '',
 				'container_class' => '',
-				'menu_class'      => 'navigation_list',
+				'menu_class'      => 'main_menu_list',
 				'walker'          => new new_walker()
 			) );
 			?>
