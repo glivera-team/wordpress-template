@@ -189,8 +189,3 @@ function disable_content_editor()
 add_action('admin_init', 'disable_content_editor');
 
 //отключить стандартный текстовый редактор end
-
-
-// Remove <p> and <br/> from Contact Form 7
-
-add_filter('wpcf7_autop_or_not', '__return_false');
