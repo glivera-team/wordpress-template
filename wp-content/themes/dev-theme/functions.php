@@ -170,3 +170,27 @@ function set_viewport()
 }
 
 add_action( 'wp_head', 'set_viewport' );
+
+//-----------------------------disable gutenberg
+add_filter('use_block_editor_for_post', 'my_disable_gutenberg', 10, 2);
+
+function my_disable_gutenberg()
+{
+	return false;
+}
+
+//отключить стандартный текстовый редактор
+
+function disable_content_editor()
+{
+	remove_post_type_support('page', 'editor');
+}
+
+add_action('admin_init', 'disable_content_editor');
+
+//отключить стандартный текстовый редактор end
+
+
+// Remove <p> and <br/> from Contact Form 7
+
+add_filter('wpcf7_autop_or_not', '__return_false');
