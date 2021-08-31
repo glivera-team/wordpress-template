@@ -8,6 +8,6 @@ the_post_thumbnail( $size, $attr );
 
 the_post_thumbnail('full', array(
                 'src'   => $src,
-                'class' => 'blog_img',
+                'class' => 'section_img',
                 'alt'   => 'background'
               ));
