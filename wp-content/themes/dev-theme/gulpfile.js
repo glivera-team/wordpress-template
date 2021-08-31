@@ -118,7 +118,7 @@ gulp.task('watch', function () {
 	gulp.watch(assetsDir + 'js/libs/**/*.js', gulp.series('jsConcatLibs'));
 	gulp.watch(assetsDir + 'js/components/**/*.js', gulp.series('jsConcatComponents'));
 	gulp.watch(assetsDir + 'js/**/*.js', gulp.series('jsCopy'));
-	gulp.watch(assetsDir + 'fonts/**/*', gulp.series('fontsConvert'));
+	// gulp.watch(assetsDir + 'fonts/**/*', gulp.series('fontsConvert'));
 });
 
 //livereload and open project in browser
@@ -212,7 +212,7 @@ gulp.task('copySVGFiles', function () {
 //---------------------------------------------
 
 gulp.task('default', gulp.series(
-	gulp.parallel('sass', 'fontsConvert', 'jsConcatLibs', 'jsConcatComponents', 'jsCopy', 'watch', 'browser-sync')
+	gulp.parallel('sass', 'jsConcatLibs', 'jsConcatComponents', 'jsCopy', 'watch', 'browser-sync')
 ) );
 
 gulp.task('build', gulp.series(
