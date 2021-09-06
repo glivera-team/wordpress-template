@@ -26,7 +26,7 @@ let gulp      = require('gulp'),
 
 // plugins for build
 let purify    = require('gulp-purifycss'),
-		uglify    = require('gulp-uglify'),
+		terser    = require('gulp-terser'),
 		imagemin  = require('gulp-imagemin'),
 		pngquant  = require('imagemin-pngquant'),
 		csso      = require('gulp-csso');
@@ -54,6 +54,13 @@ gulp.task('fontsConvert', function () {
 gulp.task('jsConcatLibs', function () {
 	return gulp.src(assetsDir + 'js/libs/**/*.js')
 		.pipe(concat('libs.js', {newLine: ';'}))
+		.pipe(gulp.dest('js/'))
+		.pipe(browserSync.stream());
+});
+
+gulp.task('jsConcatComponents', function () {
+	return gulp.src(assetsDir + 'js/components/**/*.js')
+		.pipe(concat('components.js', {newLine: ';'}))
 		.pipe(gulp.dest('js/'))
 		.pipe(browserSync.stream());
 });
@@ -109,8 +116,9 @@ gulp.task('svgSpriteBuild', function () {
 gulp.task('watch', function () {
 	gulp.watch(assetsDir + 'sass/**/*.scss', gulp.series('sass'));
 	gulp.watch(assetsDir + 'js/libs/**/*.js', gulp.series('jsConcatLibs'));
+	gulp.watch(assetsDir + 'js/components/**/*.js', gulp.series('jsConcatComponents'));
 	gulp.watch(assetsDir + 'js/**/*.js', gulp.series('jsCopy'));
-	gulp.watch(assetsDir + 'fonts/**/*', gulp.series('fontsConvert'));
+	// gulp.watch(assetsDir + 'fonts/**/*', gulp.series('fontsConvert'));
 });
 
 //livereload and open project in browser
@@ -142,7 +150,7 @@ gulp.task('cssLint', function () {
 //---------------------------------building final project folder
 //clean build folder
 gulp.task('cleanBuildDir', function (cb) {
-	rimraf(buildDir, cb);
+  return rimraf(buildDir, cb);
 });
 
 //minify images
@@ -164,16 +172,19 @@ gulp.task('fontsBuild', function () {
 
 //copy and minify js
 gulp.task('jsBuild', function () {
-	return gulp.src([assetsDir + 'js/**/*', '!' + assetsDir + 'js/all/**/*.js'])
-	.pipe(uglify())
+	//return gulp.src([assetsDir + 'js/**/*', '!' + assetsDir + 'js/all/**/*.js'])
+	return gulp.src(buildDir + 'js/**/*')
+	.pipe(terser())
 	.pipe(gulp.dest(buildDir + 'js/'))
 });
 
 gulp.task('jsConcat', function () {
-	return gulp.src(assetsDir + 'js/libs/**/*.js')
-	.pipe(concat('libs.js', {newLine: ';'}))
-	.pipe(gulp.dest(buildDir + 'js/'))
+	// return gulp.src([assetsDir + 'js/libs/**/*.js', '!' + assetsDir + 'js/components/**/*.js'])
+	return gulp.src(assetsDir + 'js/**/*')
+		.pipe(concat('main.js', {newLine: ';'}))
+		.pipe(gulp.dest(buildDir + 'js/'))
 });
+
 
 //copy, minify css
 gulp.task('cssBuild', function () {
@@ -201,10 +212,11 @@ gulp.task('copySVGFiles', function () {
 //---------------------------------------------
 
 gulp.task('default', gulp.series(
-	gulp.parallel('sass', 'fontsConvert', 'jsConcatLibs', 'jsCopy', 'watch', 'browser-sync')
+	gulp.parallel('sass', 'jsConcatLibs', 'jsConcatComponents', 'jsCopy', 'watch', 'browser-sync')
 ) );
 
 gulp.task('build', gulp.series(
 	'cleanBuildDir',
-	gulp.parallel('imgBuild', 'jsConcat', 'jsBuild', 'cssBuild', 'copyPHPFiles' ,'copyACFJson', 'copySVGFiles')
+	gulp.parallel('jsConcat'),
+	gulp.parallel('imgBuild', 'jsBuild', 'cssBuild', 'copyPHPFiles' ,'copyACFJson', 'copySVGFiles')
 ) );

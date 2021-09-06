@@ -35,3 +35,4 @@ wp-content/*
 
 ## Other rules down here
 /wp-content/themes/dev-theme/node_modules/*
+/wp-content/themes/dev-theme/styles/*

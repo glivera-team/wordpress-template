@@ -38,8 +38,11 @@ class new_walker extends Walker_Nav_Menu {
 		$id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
 
 		// создаем HTML код элемента меню
-		$output .= $indent . '<li' . $id . $class_names . '>';
-
+		if (in_array('current-menu-item', $classes)) {
+			$output .= $indent . '<li class="main_menu_item active_mod"' . $id . $class_names . '>';
+		} else {
+			$output .= $indent . '<li class="main_menu_item"' . $id . $class_names . '>';
+		}
 		$atts           = array();
 		$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
 		$atts['target'] = ! empty( $item->target ) ? $item->target : '';
@@ -60,7 +63,7 @@ class new_walker extends Walker_Nav_Menu {
 		$title = apply_filters( 'nav_menu_item_title', $title, $item, $args, $depth );
 
 		$item_output = $args->before;
-		$item_output .= '<a class="main_nav_link" ' . $attributes . '>';
+		$item_output .= '<a class="main_menu_link" ' . $attributes . '>';
 		$item_output .= $args->link_before . $title . $args->link_after;
 		$item_output .= '</a>';
 		$item_output .= $args->after;

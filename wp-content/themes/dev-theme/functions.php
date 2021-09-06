@@ -1,6 +1,5 @@
 <?php
 
-require_once ( TEMPLATEPATH . '/inc/functions/site_settings.php' );
 require_once ( TEMPLATEPATH . '/inc/wp_customizer.php' );
 require_once ( TEMPLATEPATH . '/inc/wp_custom_menu_walker.php' );
 require_once ( TEMPLATEPATH . '/inc/functions/disable_emoji.php' );
@@ -59,15 +58,18 @@ function register_styles() {
 function register_scripts() {
 	$main_js = get_template_directory_uri() . '/js/main.js';
 	$libs_js = get_template_directory_uri() . '/js/libs.js';
+	$components_js = get_template_directory_uri() . '/js/components.js';
 
 	wp_deregister_script( 'jquery' );
 
 	wp_register_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js', false, '1.0.0', true );
 	wp_register_script( 'libs', $libs_js, array('jquery'), hash_file( 'crc32', $libs_js ), true );
 	wp_register_script( 'main', $main_js, array('jquery'), hash_file('crc32', $main_js ), true );
+	wp_register_script('components', $components_js, array('jquery'), hash_file('crc32', $components_js), true);
 
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'libs' );
+	wp_enqueue_script('components');
 	wp_enqueue_script( 'main' );
 }
 
@@ -163,39 +165,27 @@ function add_favicon() {
 function set_viewport()
 {
 	?>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="viewport" content="width=device-width" />
 	<?php
 }
 
 add_action( 'wp_head', 'set_viewport' );
 
-/**
- * Add Shortcode
- */
-function generate_iframe( $atts ) {
-	// Attributes
-	$atts = shortcode_atts(
-		array(
-			'src' => null,
-			'width' => '640',
-			'height' => '320',
-		),
-		$atts,
-		'iframe'
-	);
-	$id = uniqid();
-	$iframe_obj = 'iframe_obj_' . $id;
+//-----------------------------disable gutenberg
+add_filter('use_block_editor_for_post', 'my_disable_gutenberg', 10, 2);
 
-	wp_localize_script( 'main', $iframe_obj, array(
-			'iframe_width'  => $atts['width'],
-			'iframe_height' => $atts['height']
-	) );
-
-	if ( $atts['src'] ) :
-		return '<iframe id="iframe-'. $id .'" src="'. $atts['src'] .'"width="'. $atts['width'] .'" height="'. $atts['height'] .'"></iframe>';
-	else :
-		__return_false();
-	endif;
-
+function my_disable_gutenberg()
+{
+	return false;
 }
-add_shortcode( 'iframe', 'generate_iframe' );
+
+//отключить стандартный текстовый редактор
+
+function disable_content_editor()
+{
+	remove_post_type_support('page', 'editor');
+}
+
+add_action('admin_init', 'disable_content_editor');
+
+//отключить стандартный текстовый редактор end
