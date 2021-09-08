@@ -114,27 +114,6 @@ if( function_exists('acf_add_options_page') ) {
 }
 
 /**
- * Add *.svg files support
- */
-function custom_mtypes( $m ){
-	$m['svg'] = 'image/svg+xml';
-	return $m;
-}
-
-add_filter( 'upload_mimes', 'custom_mtypes' );
-
-/**
- * Get svg icon from sprite
- *
- * usage: icon( 'check' ); or icon( 'check', 'test_mod' );
- */
-function icon( $icon_name, $icon_mod = null ) {
-	$classes = ( !$icon_mod ) ? 'icon icon-'. $icon_name : 'icon icon-'. $icon_name . ' ' . $icon_mod;
-	return print('<svg class="' . $classes . '"><use xlink:href="'. get_template_directory_uri() .'/i/sprite/sprite.svg#' . $icon_name . '"></use></svg>');
-}
-
-
-/**
  * Add viewport metateg
  */
 
