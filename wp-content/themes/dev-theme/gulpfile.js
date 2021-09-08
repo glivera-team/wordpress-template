@@ -32,6 +32,12 @@ let purify    = require('gulp-purifycss'),
 		csso      = require('gulp-csso');
 
 //----------------------------------------------------Compiling
+// expanded - полностью развёрнутый CSS;
+// nested - показывает вложенность (по умолчанию);
+// compact - каждый селектор на новой строке;
+// compressed - всё в одну строку.
+// .pipe(sass({outputStyle: 'compressed'}))
+
 gulp.task('sass', function () {
 	return gulp.src([assetsDir + 'sass/**/*.scss', '!' + assetsDir + 'sass/**/_*.scss'])
 		.pipe(plumber())
