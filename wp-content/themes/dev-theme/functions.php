@@ -1,7 +1,6 @@
 <?php
 
 require_once ( TEMPLATEPATH . '/inc/MTDUtils.php' );
-require_once ( TEMPLATEPATH . '/inc/wp_customizer.php' );
 require_once ( TEMPLATEPATH . '/inc/wp_custom_menu_walker.php' );
 
 $allowed_html = array(
@@ -144,3 +143,23 @@ function disable_content_editor()
 add_action('admin_init', 'disable_content_editor');
 
 //отключить стандартный текстовый редактор end
+
+
+//add picture
+
+function picture($img_arr, $img_webp_url, $img_class = '', $img_w_class = ''){
+	if ($img_w_class) { ?>
+	<picture class="<?php echo $img_w_class?>">
+	<?php } else { ?>
+	<picture>
+	<?php }; ?>
+	<?php
+		if ($img_webp_url) {
+	?>
+	<source srcset="<?php echo $img_webp_url; ?>" type="image/webp">
+	<?php }; ?>
+	<img src="<?php echo esc_url($img_arr['url']); ?>" alt="<?php echo esc_attr($img_arr['alt']); ?>" class="<?php echo $img_class; ?>"; />
+</picture><?php
+}
+
+//add picture###
