@@ -126,7 +126,7 @@ function set_viewport()
 add_action( 'wp_head', 'set_viewport' );
 
 //-----------------------------disable gutenberg
-add_filter('use_block_editor_for_post', 'my_disable_gutenberg', 10, 2);
+//add_filter('use_block_editor_for_post', 'my_disable_gutenberg', 10, 2);
 
 function my_disable_gutenberg()
 {
@@ -140,7 +140,7 @@ function disable_content_editor()
 	remove_post_type_support('page', 'editor');
 }
 
-add_action('admin_init', 'disable_content_editor');
+//add_action('admin_init', 'disable_content_editor');
 
 //отключить стандартный текстовый редактор end
 
@@ -163,3 +163,8 @@ function picture($img_arr, $img_webp_url, $img_class = '', $img_w_class = ''){
 }
 
 //add picture###
+
+add_action( 'admin_enqueue_scripts', 'load_admin_styles' );
+function load_admin_styles() {
+	wp_enqueue_style( 'admin_css', get_template_directory_uri() . '/style.css', false, '1.0.0' );
+}
