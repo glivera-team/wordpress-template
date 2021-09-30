@@ -3,6 +3,12 @@
 require_once ( TEMPLATEPATH . '/inc/MTDUtils.php' );
 require_once ( TEMPLATEPATH . '/inc/wp_custom_menu_walker.php' );
 
+/**
+ * Disable Gutenberg editor for posts and pages
+ */
+MTDUtils::disable_gutenberg();
+
+global $allowed_html;
 $allowed_html = array(
 	'a' => array(
 		'href'  => true,
@@ -124,26 +130,6 @@ function set_viewport()
 }
 
 add_action( 'wp_head', 'set_viewport' );
-
-//-----------------------------disable gutenberg
-add_filter('use_block_editor_for_post', 'my_disable_gutenberg', 10, 2);
-
-function my_disable_gutenberg()
-{
-	return false;
-}
-
-//отключить стандартный текстовый редактор
-
-function disable_content_editor()
-{
-	remove_post_type_support('page', 'editor');
-}
-
-add_action('admin_init', 'disable_content_editor');
-
-//отключить стандартный текстовый редактор end
-
 
 //add picture
 
