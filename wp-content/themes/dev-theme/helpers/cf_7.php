@@ -5,6 +5,9 @@
 add_filter('wpcf7_autop_or_not', '__return_false');
 
 
+echo do_shortcode('[contact-form-7 id="285" title="Callback popup Uk"]');
+
+
 // Contact Form 7 Submit button
 
 /*removing default submit tag*/
