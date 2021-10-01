@@ -1,4 +1,6 @@
 <?php
+$logo = get_field('header_logo', 'option');
+
 if ($logo) { ?>
 	<?php if (is_front_page() || is_home()) { ?>
 		<div class="header_logo_w">
