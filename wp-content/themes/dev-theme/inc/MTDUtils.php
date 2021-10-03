@@ -19,7 +19,9 @@ class MTDUtils {
 		remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
 
 		// filter to remove TinyMCE emojis
-		add_filter( 'tiny_mce_plugins', 'disable_emojicons_tinymce' );
+		if ( !has_filter( 'use_block_editor_for_post' ) && !has_filter( 'use_block_editor_for_page' ) ) {
+			add_filter( 'tiny_mce_plugins', array( __CLASS__, 'disable_emojicons_tinymce' ) );
+		}
 	}
 
 	static function disable_emojicons_tinymce( $plugins ) {
@@ -28,6 +30,15 @@ class MTDUtils {
 		} else {
 			return array();
 		}
+	}
+
+	/**
+	 * Disable Gutenberg editor for posts and pages
+	 * usage: MTDUtils::disable_gutenberg();
+	 */
+	public static function disable_gutenberg() {
+		add_filter('use_block_editor_for_post', '__return_false', 10);
+		add_filter('use_block_editor_for_page', '__return_false', 10);
 	}
 
 	/**
