@@ -1,0 +1,2 @@
+Advanced Editor Tools (previously TinyMCE Advanced) - Extends and enhances the block editor (Gutenberg) and the classic editor (TinyMCE).
+                                                      Раcширяет стандартный редактор текста.
