@@ -6,7 +6,7 @@
             "key": "field_6159d689dae4f",
             "label": "Hero title",
             "name": "hero_title",
-            "type": "clone",
+            "type": "textarea",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -15,19 +15,17 @@
                 "class": "",
                 "id": ""
             },
-            "clone": [
-                "field_6159d2cfbda48"
-            ],
-            "display": "seamless",
-            "layout": "block",
-            "prefix_label": 0,
-            "prefix_name": 0
+            "default_value": "Hero block title",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 4,
+            "new_lines": "br"
         },
         {
             "key": "field_6159d97798443",
             "label": "Hero subtitle",
             "name": "hero_subtitle",
-            "type": "clone",
+            "type": "textarea",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -36,13 +34,30 @@
                 "class": "",
                 "id": ""
             },
-            "clone": [
-                "field_6159d2e4bda49"
-            ],
-            "display": "seamless",
-            "layout": "block",
-            "prefix_label": 0,
-            "prefix_name": 0
+            "default_value": "Hero block subtitle",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 4,
+            "new_lines": "br"
+        },
+        {
+            "key": "field_615b5a568542f",
+            "label": "Hero text",
+            "name": "hero_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Hero block text",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": "wpautop"
         },
         {
             "key": "field_6159ddd1d10f0",
@@ -86,5 +101,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1633279462
+    "modified": 1633431127
 }

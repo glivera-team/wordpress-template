@@ -1,8 +1,8 @@
 {
-	"hero": {
-		"hero_title": "Hero title",
-		"hero_subtitle": "Hero subtitle",
-		"hero_text": "Hero text",
+	"hero-block": {
+		"hero_title": "**Hero title**",
+		"hero_subtitle": "**Hero subtitle**",
+		"hero_text": "**Hero text**",
 		"hero_image": "hero_image.svg",
 		"preview": "preview.jpg"
 	}

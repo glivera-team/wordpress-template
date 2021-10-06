@@ -15,7 +15,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "default_value": "[Your title...]",
             "placeholder": "",
             "prepend": "",
             "append": "",
@@ -34,7 +34,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "default_value": "[Your subtitle...]",
             "placeholder": "",
             "maxlength": "",
             "rows": "",
@@ -53,7 +53,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "default_value": "[Your text...]",
             "tabs": "all",
             "toolbar": "full",
             "media_upload": 0,
@@ -77,5 +77,5 @@
     "hide_on_screen": "",
     "active": 0,
     "description": "",
-    "modified": 1633276941
+    "modified": 1633427402
 }

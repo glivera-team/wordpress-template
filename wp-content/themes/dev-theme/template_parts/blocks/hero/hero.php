@@ -1,10 +1,8 @@
 <?php
-$image = get_field('hero_image');
-
-// Show image in block preview
-if ( isset( $block['data']['preview_image_help'] ) ) {
-	echo '<img src="' . $block['data']['preview_image_help'] . '" style="width:100%; height:auto;" >';
-}
+$image = get_field('hero_image') ?: 'Your title here...';
+$title = get_field('hero_title') ?: 'Your subtitle here...';
+$subtitle = get_field('hero_subtitle') ?: 'Your text here...';
+$text = get_field('hero_text');
 ?>
 
 <section class="section decor_mod offset_2_top">
@@ -22,12 +20,14 @@ if ( isset( $block['data']['preview_image_help'] ) ) {
 
 			<div class="hero_col">
 				<div class="hero_text">
-					<h2 class="section_title left_lvl_mod offset_v2_mod"><?php the_field('hero_title') ?></h2>
-					<h3 class="section_subtitle offset_mod"><?php the_field('hero_subtitle'); ?></h3>
-					<div class="section_descr font_mod"><?php the_field('hero_text'); ?></div>
+					<h2 class="section_title left_lvl_mod offset_v2_mod"><?php echo $title; ?></h2>
+					<h3 class="section_subtitle offset_mod"><?php echo $subtitle; ?></h3>
+					<div class="section_descr font_mod"><?php echo $text; ?>
+					</div>
 				</div>
 
 			</div>
 		</div>
 	</div>
 </section>
+<?php //}

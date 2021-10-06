@@ -1,7 +1,7 @@
 <?php
 
 require_once ( TEMPLATEPATH . '/inc/MTDUtils.php' );
-require_once ( TEMPLATEPATH . '/inc/ACFBlocks.php' );
+require_once ( TEMPLATEPATH . '/inc/MTDBlocks.php' );
 require_once ( TEMPLATEPATH . '/inc/wp_custom_menu_walker.php' );
 
 /**
@@ -150,9 +150,3 @@ function picture($img_arr, $img_webp_url, $img_class = '', $img_w_class = ''){
 }
 
 //add picture###
-
-//add_action( 'admin_enqueue_scripts', 'load_admin_styles' );
-//function load_admin_styles() {
-//	wp_enqueue_style( 'admin_css', get_template_directory_uri() . '/styles/main_global.css', false, '1.0.0' );
-//	wp_enqueue_style( 'admin_css', get_template_directory_uri() . '/style.css', false, '1.0.0' );
-//}
