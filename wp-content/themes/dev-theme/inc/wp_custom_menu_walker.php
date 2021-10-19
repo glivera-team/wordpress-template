@@ -32,16 +32,16 @@ class new_walker extends Walker_Nav_Menu {
 		$args = apply_filters( 'nav_menu_item_args', $args, $item, $depth );
 
 		$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args, $depth ) );
-		$class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
+		$class_names = $class_names ? esc_attr( $class_names ) : '';
 
 		$id = apply_filters( 'nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args, $depth );
 		$id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
 
 		// создаем HTML код элемента меню
 		if (in_array('current-menu-item', $classes)) {
-			$output .= $indent . '<li class="main_menu_item active_mod"' . $id . $class_names . '>';
+			$output .= $indent . '<li class="main_menu_item active_mod ' . $class_names . '"' . $id . '>';
 		} else {
-			$output .= $indent . '<li class="main_menu_item"' . $id . $class_names . '>';
+			$output .= $indent . '<li class="main_menu_item ' . $class_names . '"' . $id .'>';
 		}
 		$atts           = array();
 		$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
