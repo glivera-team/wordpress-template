@@ -1,5 +1,5 @@
 <?php
-$image = get_field('hero_image') ?: 'Your title here...';
+$image = get_field('hero_image');
 $title = get_field('hero_title') ?: 'Your subtitle here...';
 $subtitle = get_field('hero_subtitle') ?: 'Your text here...';
 $text = get_field('hero_text');

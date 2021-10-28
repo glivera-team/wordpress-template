@@ -5,6 +5,11 @@ MTDBlocks::register_blocks();
 
 
 class MTDBlocks {
+	public static function register_blocks() {
+		add_action('acf/init', array( __CLASS__, 'init_blocks' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'load_admin_styles' ) );
+	}
+
 	/**
 	 * Get block name without prefix
 	 */
@@ -13,9 +18,16 @@ class MTDBlocks {
 		return $block_name;
 	}
 
-	public static function register_blocks() {
-		add_action('acf/init', array( __CLASS__, 'init_blocks' ) );
-		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'load_admin_styles' ) );
+	/**
+	 * Test
+	 */
+	public static function get_blocks_directory_uri( $attr = null ) {
+		$path = get_template_directory_uri() . '/template_parts/blocks';
+		if ( $attr ) {
+			return $path .= $attr;
+		} else {
+			return $path;
+		}
 	}
 
 	/**
@@ -27,6 +39,23 @@ class MTDBlocks {
 	}
 
 	/**
+	 * Get a specific block field
+	 */
+	public static function get_block_data( $search_key, $block ) {
+		$data = null;
+		foreach ( new RecursiveIteratorIterator(
+			new RecursiveArrayIterator( $block ), RecursiveIteratorIterator::LEAVES_ONLY )
+			as $key => $value
+		) {
+			if ( $search_key === $key ) {
+				$data = $value;
+			}
+		}
+
+		return $data;
+	}
+
+	/**
 	 * Register custom blocks
 	 */
 	static function init_blocks() {
@@ -35,11 +64,7 @@ class MTDBlocks {
 				'name'            => 'hero-block',
 				'title'           => __('Hero block'),
 				'description'     => __('A custom hero block.'),
-				'render_template' => get_template_directory() . '/template_parts/blocks/hero/hero.php',
-				'enqueue_style'   => get_template_directory_uri() . '/template_parts/blocks/hero/hero.css',
-				'enqueue_assets' => function() {
-					wp_enqueue_style( 'hero-block', get_template_directory_uri() . '/template_parts/blocks/hero/hero.css' );
-				},
+				'render_template' => get_template_directory_uri() . '/template_parts/blocks/hero/hero.php',
 				'category'        => 'formatting',
 				'icon'            => 'admin-comments',
 				'keywords'        => array( 'hero', 'text' ),
@@ -47,12 +72,8 @@ class MTDBlocks {
 					'attributes' => array(
 						'mode' => 'preview',
 						'data' => array(
-							'hero_title'         => 'Title',
-							'hero_subtitle'      => 'Subtitle',
-							'hero_text'          => 'Lorem ipsum dolor sit amet',
-							'hero_image'         => get_template_directory_uri() . '/template_parts/blocks/hero/hero_image.svg',
-							'preview_image_help' => get_template_directory_uri() . '/template_parts/blocks/hero/preview.jpg',
-							//'is_preview'         => true
+							'preview_img' => self::get_blocks_directory_uri( '/hero/preview.jpg' ),
+							'is_preview'  => true
 						)
 					)
 				)
