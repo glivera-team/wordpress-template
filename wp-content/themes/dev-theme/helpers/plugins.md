@@ -3,3 +3,10 @@ Advanced Editor Tools (previously TinyMCE Advanced) - Extends and enhances the b
 
 Maintenance - Put your site in maintenance mode, away from the public view. Use maintenance plugin if your website is in development or you need to change a few things, run an upgrade. Make it only accessible to logged in users.
               Закрывает сайт на обслуживание.
+
+Safe SVG - Allows SVG uploads into WordPress and sanitizes the SVG before saving it
+
+Flamingo - A trustworthy message storage plugin for Contact Form 7.
+           Плагин для подписок, дублирует входящие сообщения и данные CF7
+
+Query Monitor - The Developer Tools Panel for WordPress.
