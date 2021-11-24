@@ -12,7 +12,7 @@
 <body>
 	<header class="header">
 		<?php if (get_field('logo_header', 'option')) { ?>
-			<?php if (is_front_page() || is_home()) { ?>
+			<?php if (is_front_page()) { ?>
 				<div class="logo">
 					<img class="logo_img" src="<?php the_field('logo_header', 'option'); ?>" alt="logo" />
 				</div>

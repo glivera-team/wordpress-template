@@ -2,7 +2,7 @@
 $logo = get_field('header_logo', 'option');
 
 if ($logo) { ?>
-	<?php if (is_front_page() || is_home()) { ?>
+	<?php if (is_front_page()) { ?>
 		<div class="header_logo_w">
 			<img class="header_logo" src="<?php echo $logo; ?>" alt="logo" />
 		</div>

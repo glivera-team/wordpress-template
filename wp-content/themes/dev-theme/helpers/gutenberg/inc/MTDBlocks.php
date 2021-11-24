@@ -1,16 +1,14 @@
 <?php
-
-
 class MTDBlocks
 {
 	/**
 	 * Get block name without prefix
 	 */
-	public static function get_block_name($block)
-	{
-		$block_name = str_replace('acf/', '', $block['name']);
-		return $block_name;
-	}
+	// public static function get_block_name($block)
+	// {
+	// 	$block_name = str_replace('acf/', '', $block['name']);
+	// 	return $block_name;
+	// }
 
 	public static function register_blocks()
 	{
